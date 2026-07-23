@@ -1,19 +1,19 @@
 # 1. Generate the key pair
-resource "tls_private_key" "keypair2" {
+resource "tls_private_key" "keypair" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
 # 2. Register the public key with AWS
-resource "aws_key_pair" "keypair2" {
-  key_name   = "ce13-kh-keypair2"
-  public_key = tls_private_key.keypair2.public_key_openssh
+resource "aws_key_pair" "keypair" {
+  key_name   = "ce13-kh-keypair"
+  public_key = tls_private_key.keypair.public_key_openssh
 }
 
 # 3. Save the private key locally so you can SSH in
 resource "local_file" "private_key" {
-  content         = tls_private_key.keypair2.private_key_pem
-  filename        = "C:/Users/kuoho/Documents/NTU PACE/Module 2/18Jul26Coaching/ce13-kh-keypair2.pem"
+  content         = tls_private_key.keypair.private_key_pem
+  filename        = "C:/Users/kuoho/Documents/NTU PACE/Module 2/Coaching6/ce13-kh-keypair.pem"
   file_permission = "0600"
 }
 
@@ -25,7 +25,7 @@ resource "aws_instance" "public" {
   subnet_id                   = "subnet-07fe08d5909e677db"  #Public Subnet ID, e.g. subnet-xxxxxxxxxxx
   associate_public_ip_address = true
   #key_name                    = "ce13-kh-keypair" #Change to your keyname, e.g. jazeel-key-pair
-  key_name                    = aws_key_pair.keypair2.key_name
+  key_name                    = aws_key_pair.keypair.key_name
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
  
   tags = {
