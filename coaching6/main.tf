@@ -17,7 +17,6 @@ resource "local_file" "private_key" {
   file_permission = "0600"
 }
 
-
 # 2.0 Generate EC2 Instance
 resource "aws_instance" "public" {
   ami                         = "ami-01edba92f9036f76e" # find the AMI ID of Amazon Linux 2023
