@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Provisions a single S3 bucket with encryption, versioning, and public access blocked.
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: ce13khmod2sharingcloudformations3
+    Description: Globally unique name for the S3 bucket
+
+Resources:
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+Outputs:
+  BucketName:
+    Description: Name of the created bucket
+    Value: !Ref MyS3Bucket
+  BucketArn:
+    Description: ARN of the created bucket
+    Value: !GetAtt MyS3Bucket.Arn
