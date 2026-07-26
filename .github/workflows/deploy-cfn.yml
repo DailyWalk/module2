@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'cloudformation/s3-bucket.yaml'
+      - 'module2/cloudformation/s3-bucket.yaml'
   workflow_dispatch: {}
 
 permissions:
@@ -27,7 +27,7 @@ jobs:
       - name: Deploy CloudFormation stack
         run: |
           aws cloudformation deploy \
-            --template-file cloudformation/s3-bucket.yaml \
+            --template-file module2/cloudformation/s3-bucket.yaml \
             --stack-name ce13-kh-mod2-sharing-s3-stack \
             --parameter-overrides BucketName=ce13khmod2sharingcloudformations3 \
             --no-fail-on-empty-changeset
