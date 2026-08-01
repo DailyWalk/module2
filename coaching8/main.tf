@@ -246,4 +246,5 @@ resource "aws_db_instance" "default" {
   vpc_security_group_ids      = [aws_security_group.allow_ssh.id]
   publicly_accessible         = false
   multi_az                    = false
+  skip_final_snapshot         = true
 }
