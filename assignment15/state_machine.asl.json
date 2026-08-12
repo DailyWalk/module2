@@ -1,0 +1,55 @@
+{
+  "Comment": "Two-step serverless workflow: process data, then store it",
+  "StartAt": "ProcessData",
+  "States": {
+    "ProcessData": {
+      "Type": "Task",
+      "Resource": "${process_lambda_arn}",
+      "Comment": "Step 1: process/transform the incoming data",
+      "ResultPath": "$",
+      "Next": "StoreData",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.TaskFailed"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "WorkflowFailed"
+        }
+      ]
+    },
+    "StoreData": {
+      "Type": "Task",
+      "Resource": "${store_lambda_arn}",
+      "Comment": "Step 2: persist the processed data to DynamoDB",
+      "ResultPath": "$",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.TaskFailed"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "WorkflowFailed"
+        }
+      ],
+      "End": true
+    },
+    "WorkflowFailed": {
+      "Type": "Fail",
+      "Error": "WorkflowError",
+      "Cause": "One of the workflow steps failed. Check the error field for details."
+    }
+  }
+}
