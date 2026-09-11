@@ -4,7 +4,7 @@ Description: Provisions a single S3 bucket with encryption, versioning, and publ
 Parameters:
   BucketName:
     Type: String
-    Default: ce13khmod2sharingcloudformations3
+    Default: ce13khmod2sharingcloudformations3b
     Description: Globally unique name for the S3 bucket
 
 Resources:
