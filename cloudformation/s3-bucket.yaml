@@ -4,7 +4,7 @@ Description: Provisions a single S3 bucket with encryption, versioning, and publ
 Parameters:
   BucketName:
     Type: String
-    Default: ce13khmod2sharingcloudformations3b
+    Default: ce13khmod2sharingcloudformations3
     Description: Globally unique name for the S3 bucket
 
 Resources:
@@ -31,3 +31,76 @@ Outputs:
   BucketArn:
     Description: ARN of the created bucket
     Value: !GetAtt MyS3Bucket.Arn
+
+
+#arn:aws:iam::255945442255:role/ce13-kh-mod2-sharing-cloudformation
+#ce13-kh-mod2-sharing-cloudformationPolicy
+#{
+#    "Version": "2012-10-17",
+#    "Statement": [
+#        {
+#            "Sid": "CloudFormationStackManagement",
+#            "Effect": "Allow",
+#            "Action": [
+#                "cloudformation:CreateStack",
+#                "cloudformation:UpdateStack",
+#                "cloudformation:DescribeStacks",
+#                "cloudformation:DescribeStackEvents",
+#                "cloudformation:DescribeStackResource",
+#                "cloudformation:DescribeStackResources",
+#                "cloudformation:GetTemplate",
+#                "cloudformation:ValidateTemplate",
+#                "cloudformation:CreateChangeSet",
+#                "cloudformation:DescribeChangeSet",
+#                "cloudformation:ExecuteChangeSet",
+#                "cloudformation:DeleteChangeSet",
+#                "cloudformation:ListStackResources"
+#            ],
+#            "Resource": "arn:aws:cloudformation:us-east-1:255945442255:stack/ce13-kh-mod2-sharing-s3-stack/*"
+#        },
+#        {
+#            "Sid": "S3BucketManagement",
+#            "Effect": "Allow",
+#            "Action": [
+#                "s3:CreateBucket",
+#                "s3:DeleteBucket",
+#                "s3:GetBucketPolicy",
+#                "s3:PutBucketPolicy",
+#                "s3:DeleteBucketPolicy",
+#                "s3:GetBucketTagging",
+#                "s3:PutBucketTagging",
+#                "s3:GetEncryptionConfiguration",
+#                "s3:PutEncryptionConfiguration",
+#                "s3:GetBucketVersioning",
+#                "s3:PutBucketVersioning",
+#                "s3:GetBucketPublicAccessBlock",
+#                "s3:PutBucketPublicAccessBlock",
+#                "s3:GetBucketAcl",
+#                "s3:PutBucketAcl"
+#            ],
+#            "Resource": "arn:aws:s3:::ce13khmod2sharingcloudformations3"
+#        }
+#    ]
+#}
+
+#Trust policy for the role to allow GitHub Actions to assume it via OIDC
+#{
+#    "Version": "2012-10-17",
+#    "Statement": [
+#        {
+#            "Effect": "Allow",
+#            "Principal": {
+#                "Federated": "arn:aws:iam::255945442255:oidc-provider/token.actions.githubusercontent.com"
+#            },
+#            "Action": "sts:AssumeRoleWithWebIdentity",
+#            "Condition": {
+#                "StringEquals": {
+#                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+#                },
+#                "StringLike": {
+#                    "token.actions.githubusercontent.com:sub": "repo:DailyWalk@113648024/module2@1304556495:*"
+#                }
+#            }
+#        }
+#    ]
+#}
