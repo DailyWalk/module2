@@ -49,6 +49,7 @@ Outputs:
 #                "cloudformation:DescribeStackResource",
 #                "cloudformation:DescribeStackResources",
 #                "cloudformation:GetTemplate",
+#                "cloudformation:GetTemplateSummary",                 
 #                "cloudformation:ValidateTemplate",
 #                "cloudformation:CreateChangeSet",
 #                "cloudformation:DescribeChangeSet",
@@ -78,7 +79,7 @@ Outputs:
 #                "s3:GetBucketAcl",
 #                "s3:PutBucketAcl"
 #            ],
-#            "Resource": "arn:aws:s3:::ce13khmod2sharingcloudformations3"
+#            "Resource": "arn:aws:s3:::ce13khmod2sharingcloudformations3*"
 #        }
 #    ]
 #}
